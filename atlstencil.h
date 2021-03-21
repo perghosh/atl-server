@@ -4098,10 +4098,30 @@ public:
 		LPCSTR szMethod = NULL;
 		ATLASSUME(m_pRequestInfo);
 		szMethod = m_pRequestInfo->pServerContext->GetRequestMethod();
-		if (strcmp(szMethod, "GET") && strcmp(szMethod, "POST") && strcmp(szMethod, "HEAD"))
+
+      // PERG: Optimized  test and added success for OPTIONS 20210321
+
+      static constexpr unsigned int GE_GET = ((unsigned int)'G' << 8) + (unsigned int)'E';
+      static constexpr unsigned int PO_POST = ((unsigned int)'P' << 8) + (unsigned int)'O';
+      static constexpr unsigned int HE_HEAD = ((unsigned int)'H' << 8) + (unsigned int)'E';
+      static constexpr unsigned int OP_OPTIONS = ((unsigned int)'O' << 8) + (unsigned int)'P';
+
+      unsigned uNumber = ((unsigned int)szMethod[0] << 8) + (unsigned int)szMethod[1];
+      switch(uNumber)
+      {
+      case GE_GET: return HTTP_SUCCESS;
+      case PO_POST: return HTTP_SUCCESS;
+      case HE_HEAD: return HTTP_SUCCESS;
+      case OP_OPTIONS: return HTTP_SUCCESS;
+      }
+
+      return HTTP_NOT_IMPLEMENTED;
+      /*
+		if (strcmp(szMethod, "GET") && strcmp(szMethod, "POST") && strcmp(szMethod, "HEAD") && strcmp(szMethod, "OPTIONS"))
 			return HTTP_NOT_IMPLEMENTED;
 
 		return HTTP_SUCCESS;
+      */
 	}
 
 	HRESULT GetContext(REFIID riid, void** ppv)

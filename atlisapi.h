@@ -4521,10 +4521,11 @@ public:
 		HTTP_METHOD_GET,
 		HTTP_METHOD_POST,
 		HTTP_METHOD_HEAD,
-		HTTP_METHOD_DELETE,
+      HTTP_METHOD_OPTIONS, // Check if server supports method
+      HTTP_METHOD_DELETE,
 		HTTP_METHOD_LINK,
 		HTTP_METHOD_UNLINK,
-		HTTP_METHOD_DEBUG  // Debugging support for VS7
+		HTTP_METHOD_DEBUG    // Debugging support for VS7
 	};
 
 	// The collection of query parameters (name-value pairs) obtained from the query string.
@@ -5725,7 +5726,8 @@ __declspec(selectany) const char* const CHttpRequest::m_szMethodStrings[] = {
 	"GET",
 	"POST",
 	"HEAD",
-	"DELETE",
+   "OPTION",
+   "DELETE",
 	"LINK",
 	"UNLINK",
 	"DEBUG",  // Debugging support for VS7
